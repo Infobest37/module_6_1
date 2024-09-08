@@ -9,32 +9,49 @@ class Animals:
 
 class Plant:
 
-
+       # Проверяем съедобно или нет False не съедобно True съедобно
       def __init__(self, name):
         self.name = name
-        self.edidle = False # Проверяем съедобно или нет False не съедобно True съедобно
+        self.edidle = False
+
+      def food(self, food):
+          self.food = food
+
+class Plant:
+    def __init__(self, name, edible=False):  # добавляем параметр edible
+        self.name = name
+        self.edible = edible  # Проверяем съедобно или нет False не съедобно True съедобно
+
 
 class Predator(Animals):
-
     def eat(self, food):
-        if food.edidle == False: # проверка на съедобность
-            self.alive = False
-            print(f"{self.name} не стал есть {food.name}")
+        if food.edible:  # Проверяем съедобность еды
+            self.fed = True # Животное сыто
+            print(f'{self.name} съел {food.name} и погиб')
+        else:
+            self.alive = False  # Если еда несъедобная - животное умирает
+            print(f'{self.name} не стал есть {food.name}')
+
+
 class Mammal(Animals):
     def eat(self, food):
-        if food.edidle == False: # проверка на съедобность
-            self.fed = True
-            print(f"{self.name} съел {food.name}")
+        if food.edible:  # Проверяем съедобность еды
+            self.fed = True # Животное сыто
+            print(f'{self.name} съел {food.name} и насытился.')
+        else:
+            self.alive = False # Если не поел - животное умирает
+            print(f'{self.name} не стал есть {food.name} и погиб.')
+
+
 class Flower(Plant):
-     def food(self, name):
-        super().__init__(name)
-        self.edible = False  # Цветы не съедобные
+    def __init__(self, name):
+        super().__init__(name, edible=False)  # Цветы не съедобные
 
 
 class Fruit(Plant):
-    def food(self, name):
-        super().__init__(name)
-        self.edidle = True # Фрукты съедобные
+    def __init__(self, name):
+        super().__init__(name, edible=True) # Фрукты можно есть
+
 
 
 
