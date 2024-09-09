@@ -1,70 +1,57 @@
 class Animals:
-
+    alive = True  # Живое существо
+    fed = False  # True сытый, False голодный
 
     def __init__(self, name):
         self.name = name
-        self.alive = True # живое существо
-        self.fed = False # True Сытый или  False голодный
+
+    def eat(self, food: 'Plant'):  # Используем строковую аннотацию
+        if food.edible:  # Проверка на съедобность
+            print(f"{self.name} съел {food.name}")
+            self.fed = True  # Животное сыто
+        else:
+            print(f"{self.name} не стал есть {food.name}")
+            self.alive = False  # Животное погибает
 
 
 class Plant:
+    edible = False  # По умолчанию растения несъедобные
 
-       # Проверяем съедобно или нет False не съедобно True съедобно
-      def __init__(self, name):
+    def __init__(self, name):
         self.name = name
-        self.edidle = False
-
-      def food(self, food):
-          self.food = food
-
-class Plant:
-    def __init__(self, name, edible=False):  # добавляем параметр edible
-        self.name = name
-        self.edible = edible  # Проверяем съедобно или нет False не съедобно True съедобно
 
 
 class Predator(Animals):
-    def eat(self, food):
-        if food.edible:  # Проверяем съедобность еды
-            self.fed = True # Животное сыто
-            print(f'{self.name} съел {food.name} и погиб')
-        else:
-            self.alive = False  # Если еда несъедобная - животное умирает
-            print(f'{self.name} не стал есть {food.name}')
+    pass
 
 
 class Mammal(Animals):
-    def eat(self, food):
-        if food.edible:  # Проверяем съедобность еды
-            self.fed = True # Животное сыто
-            print(f'{self.name} съел {food.name} и насытился.')
-        else:
-            self.alive = False # Если не поел - животное умирает
-            print(f'{self.name} не стал есть {food.name} и погиб.')
+    pass
 
 
 class Flower(Plant):
-    def __init__(self, name):
-        super().__init__(name, edible=False)  # Цветы не съедобные
+    pass
 
 
 class Fruit(Plant):
-    def __init__(self, name):
-        super().__init__(name, edible=True) # Фрукты можно есть
+    edible = True  # Фрукты съедобные
 
 
-
-
+# Примеры использования
 a1 = Predator('Волк с Уолл-Стрит')
 a2 = Mammal('Хатико')
 p1 = Flower('Цветик семицветик')
 p2 = Fruit('Заводной апельсин')
+
 print(a1.name)
 print(p1.name)
 
 print(a1.alive)
 print(a2.fed)
-a1.eat(p1)
-a2.eat(p2)
+
+# Животные пытаются есть растения
+a1.eat(p1)  # Волк не ест цветы, они несъедобные
+a2.eat(p2)  # Хатико ест апельсин
+
 print(a1.alive)
 print(a2.fed)
